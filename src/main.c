@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "bst.h"
+#include "../include/bst.h"
 #include <stdio.h>
 
 int main() {

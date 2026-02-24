@@ -1,5 +1,4 @@
-#ifndef BST_H
-#define BST_H
+#pragma once
 
 #include <stdbool.h>
 
@@ -23,5 +22,3 @@ bool bstContains(BST *tree, int value);
 
 // Освобождение памяти
 void bstFree(BST *tree);
-
-#endif
