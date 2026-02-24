@@ -1,10 +1,10 @@
-#include <stdio.h>
 #include "../include/bst.h"
 #include <stdio.h>
 
-int main() {
+int main()
+{
     // Создаём дерево
-    BST tree = {NULL};
+    BST tree = { NULL };
 
     // Вставляем элементы
     bstInsert(&tree, 10);
