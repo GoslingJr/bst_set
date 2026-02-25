@@ -22,15 +22,11 @@ jobs:
       - name: Configure
         run: |
           mkdir -p build
-          cmake -B build
+          cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
       
       - name: Build
         run: |
           cmake --build build
-      
-      - name: Create dummy compile_commands.json
-        run: |
-          echo "[]" > build/compile_commands.json
       
       - name: Lint
         run: |
