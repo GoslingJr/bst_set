@@ -14,6 +14,9 @@ typedef struct BST {
     BSTNode* root;
 } BST;
 
+// Создание бинарного дерева поиска
+BST* createBST(void);
+
 // Вставка значения в дерево
 void bstInsert(BST* tree, int value);
 

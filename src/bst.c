@@ -2,11 +2,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Создание бинарного дерева поиска
+BST* createBST(void)
+{
+    BST* bst = malloc(sizeof(BST));
+    if (bst == NULL) {
+        return NULL;
+    }
+    bst->root = NULL;
+    return bst;
+}
+
 // Рекурсивная вставка
 static BSTNode* insertRec(BSTNode* node, int value)
 {
     if (node == NULL) {
         BSTNode* newNode = malloc(sizeof(BSTNode));
+        if (newNode == NULL) {
+            // Возвращение существующего поддерева без изменений
+            return node;
+        }
         newNode->key = value;
         newNode->left = newNode->right = NULL;
         return newNode;
@@ -18,6 +33,7 @@ static BSTNode* insertRec(BSTNode* node, int value)
     return node;
 }
 
+// Обертка рекурсивной функции вставки
 void bstInsert(BST* tree, int value)
 {
     if (tree != NULL)
@@ -27,16 +43,20 @@ void bstInsert(BST* tree, int value)
 // Рекурсивная проверка наличия
 static bool containsRec(BSTNode* node, int value)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return false;
-    if (value == node->key)
+    }
+    if (value == node->key) {
         return true;
-    if (value < node->key)
+    }
+    if (value < node->key) {
         return containsRec(node->left, value);
-    else
+    } else {
         return containsRec(node->right, value);
+    }
 }
 
+// Обертка функции рекурсивной проверки наличия
 bool bstContains(BST* tree, int value)
 {
     if (tree == NULL)
@@ -54,10 +74,12 @@ static void freeRec(BSTNode* node)
     free(node);
 }
 
+// Обертка функции очистки дерева
 void bstFree(BST* tree)
 {
     if (tree != NULL) {
         freeRec(tree->root);
         tree->root = NULL;
+        free(tree);
     }
 }
