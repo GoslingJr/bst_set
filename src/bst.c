@@ -26,18 +26,21 @@ static BSTNode* insertRec(BSTNode* node, int value)
         newNode->left = newNode->right = NULL;
         return newNode;
     }
-    if (value < node->key)
+    if (value < node->key) {
         node->left = insertRec(node->left, value);
-    else if (value > node->key)
+    }
+    else if (value > node->key) {
         node->right = insertRec(node->right, value);
+    }
     return node;
 }
 
 // Публичная функция рекурсивной вставки
 void bstInsert(BST* tree, int value)
 {
-    if (tree != NULL)
+    if (tree != NULL) {
         tree->root = insertRec(tree->root, value);
+    }
 }
 
 // Рекурсивная проверка наличия
@@ -51,7 +54,8 @@ static bool containsRec(BSTNode* node, int value)
     }
     if (value < node->key) {
         return containsRec(node->left, value);
-    } else {
+    }
+    else {
         return containsRec(node->right, value);
     }
 }
