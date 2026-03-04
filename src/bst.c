@@ -156,6 +156,7 @@ void bstPostorder(BST* tree)
     puts("");
 }
 
+// Рекурсивное вычисление высоты дерева
 static int heightRec(BSTNode* node)
 {
     if (node == NULL)
@@ -231,7 +232,7 @@ int bstMin(BST* tree)
 int bstMax(BST* tree)
 {
     if (tree == NULL || tree->root == NULL) {
-        fprintf(stderr, "Ошибка: вызов bstMax на пустом дереве\n");
+        fprintf(stderr, "Error: calling bstMin on an empty tree\n");
         exit(1);
     }
 
