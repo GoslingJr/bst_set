@@ -28,8 +28,7 @@ static BSTNode* insertRec(BSTNode* node, int value)
     }
     if (value < node->key) {
         node->left = insertRec(node->left, value);
-    }
-    else if (value > node->key) {
+    } else if (value > node->key) {
         node->right = insertRec(node->right, value);
     }
     return node;
@@ -54,8 +53,7 @@ static bool containsRec(BSTNode* node, int value)
     }
     if (value < node->key) {
         return containsRec(node->left, value);
-    }
-    else {
+    } else {
         return containsRec(node->right, value);
     }
 }
