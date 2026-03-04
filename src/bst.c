@@ -268,7 +268,7 @@ static void mergeRec(BSTNode* node, BST* targetTree)
     mergeRec(node->right, targetTree);
 }
 
-// Функция слияния двух деревьев
+// Публичная функция слияния двух деревьев
 BST* bstMerge(BST* tree1, BST* tree2)
 {
     // Создаём новое пустое дерево
