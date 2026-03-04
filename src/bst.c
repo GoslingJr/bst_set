@@ -25,25 +25,29 @@ static BSTNode* insertRec(BSTNode* node, int value)
         newNode->left = newNode->right = NULL;
         return newNode;
     }
+
     if (value < node->key) {
         node->left = insertRec(node->left, value);
     } else if (value > node->key) {
         node->right = insertRec(node->right, value);
     }
+
     return node;
 }
 
 // Публичная функция рекурсивной вставки
 void bstInsert(BST* tree, int value)
 {
-    if (tree != NULL) {
-        BSTNode* result = insertRec(tree->root, value);
-        if (result == NULL && tree->root != NULL) {
-            return;
-        } else if (result != NULL) {
-            tree->root = result;
-        }
+    if (tree == NULL) {
+        return;
     }
+
+    BSTNode* result = insertRec(tree->root, value);
+    if (result == NULL) {
+        // Ошибка malloc - дерево не изменилось
+        return;
+    }
+    tree->root = result;
 }
 
 // Рекурсивная проверка наличия
