@@ -239,3 +239,47 @@ void testMinAndMax()
     bstFree(tree);
     puts("OK");
 }
+
+// Проверка корректности BST
+void testIsValid()
+{
+    printf("Testing: Tree validation... ");
+
+    // Создаём корректное дерево
+    BST* validTree = createBST();
+    bstInsert(validTree, 50);
+    bstInsert(validTree, 30);
+    bstInsert(validTree, 70);
+    bstInsert(validTree, 20);
+    bstInsert(validTree, 40);
+    bstInsert(validTree, 60);
+    bstInsert(validTree, 80);
+
+    assert(bstIsValid(validTree) == true);
+
+    // Создаём некорректное дерево (нарушаем структуру)
+    BST* invalidTree = createBST();
+    invalidTree->root = malloc(sizeof(BSTNode));
+    invalidTree->root->key = 50;
+    invalidTree->root->left = malloc(sizeof(BSTNode));
+    invalidTree->root->left->key = 60; // Ошибка: 60 > 50, но находится слева
+    invalidTree->root->left->left = NULL;
+    invalidTree->root->left->right = NULL;
+    invalidTree->root->right = NULL;
+
+    assert(bstIsValid(invalidTree) == false);
+
+    // Освобождаем память некорректного дерева вручную
+    free(invalidTree->root->left);
+    free(invalidTree->root);
+    free(invalidTree);
+
+    // Пустое дерево
+    BST* emptyTree = createBST();
+    assert(bstIsValid(emptyTree) == true);
+
+    bstFree(validTree);
+    bstFree(emptyTree);
+
+    puts("OK");
+}
