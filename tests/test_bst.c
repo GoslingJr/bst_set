@@ -242,7 +242,7 @@ void testMinAndMax()
     puts("OK");
 }
 
-// Один тест для всего
+// Проверка удаления узла дерева
 void testDelete()
 {
     printf("Testing: Delete operations... ");
@@ -250,8 +250,9 @@ void testDelete()
     BST* tree = createBST();
 
     // Заполняем дерево
-    for (int i = 10; i <= 100; i += 10)
-        bstInsert(tree, i);
+    for (int index = 1; index <= 10; ++index) {
+        bstInsert(tree, index*10);
+    }
 
     assert(bstSize(tree) == 10);
 
