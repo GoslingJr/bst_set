@@ -9,6 +9,8 @@ void testDuplicateInsert();
 void testBoundaryValues();
 void testNullHandling();
 void testMultipleOperations();
+void testHeightAndSize();
+void testMinAndMax();
 
 // Запуск всех тестов
 int main()
@@ -21,6 +23,8 @@ int main()
     testBoundaryValues();
     testNullHandling();
     testMultipleOperations();
+    testHeightAndSize();
+    testMinAndMax();
 
     puts("\nAll test passed!\n");
     return 0;
@@ -175,4 +179,60 @@ void testMultipleOperations()
 
     bstFree(tree);
     puts("OK");
+}
+
+void testHeightAndSize() {
+    printf("Test 7: The height and size of a tree... ");
+    
+    BST* tree = createBST();
+    
+    // Пустое дерево
+    assert(bstHeight(tree) == 0);
+    assert(bstSize(tree) == 0);
+    
+    // Один элемент
+    bstInsert(tree, 50);
+    assert(bstHeight(tree) == 1);
+    assert(bstSize(tree) == 1);
+    
+    // Добавляем элементы
+    bstInsert(tree, 30);
+    bstInsert(tree, 70);
+    assert(bstHeight(tree) == 2);
+    assert(bstSize(tree) == 3);
+    
+    // Добавляем больше элементов
+    bstInsert(tree, 20);
+    bstInsert(tree, 40);
+    bstInsert(tree, 80);
+    assert(bstHeight(tree) == 3);
+    assert(bstSize(tree) == 6);
+    
+    bstFree(tree);
+    printf("OK\n");
+}
+
+void testMinAndMax() {
+    printf("Test 8: Minimum and maximum... ");
+    
+    BST* tree = createBST();
+    
+    // Вставляем элементы в разном порядке
+    int values[] = {50, 30, 70, 20, 40, 80, 10, 90, 60};
+    for (int i = 0; i < 9; i++) {
+        bstInsert(tree, values[i]);
+    }
+    
+    assert(bstMin(tree) == 10);
+    assert(bstMax(tree) == 90);
+    
+    // Добавляем новые минимум и максимум
+    bstInsert(tree, 5);
+    bstInsert(tree, 100);
+    
+    assert(bstMin(tree) == 5);
+    assert(bstMax(tree) == 100);
+    
+    bstFree(tree);
+    printf("OK\n");
 }
