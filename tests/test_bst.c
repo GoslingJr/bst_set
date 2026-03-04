@@ -11,6 +11,7 @@ void testNullHandling();
 void testMultipleOperations();
 void testHeightAndSize();
 void testMinAndMax();
+void testMerge();
 
 // Запуск всех тестов
 int main()
@@ -25,6 +26,7 @@ int main()
     testMultipleOperations();
     testHeightAndSize();
     testMinAndMax();
+    testMerge();
 
     puts("\nAll test passed!");
     return 0;
