@@ -1,6 +1,8 @@
 #include "../include/bst.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+#include <stdbool.h>
 
 // Создание бинарного дерева поиска
 BST* createBST(void)
@@ -250,4 +252,32 @@ int bstMax(BST* tree)
     }
 
     return maxRec(tree->root);
+}
+
+// Рекурсивная проверка с диапазоном допустимых значений
+static bool isValidRec(BSTNode* node, int min, int max)
+{
+    // Пустое поддерево всегда корректно
+    if (node == NULL)
+        return true;
+    
+    // Проверяем текущий узел на соответствие диапазону
+    if (node->key <= min || node->key >= max)
+        return false;
+    
+    // Рекурсивно проверяем левое поддерево (все ключи должны быть меньше текущего)
+    // и правое поддерево (все ключи должны быть больше текущего)
+    return isValidRec(node->left, min, node->key) &&
+           isValidRec(node->right, node->key, max);
+}
+
+// Публичная функция проверки корректности BST
+bool bstIsValid(BST* tree)
+{
+    // Пустое дерево считаем корректным BST
+    if (tree == NULL || tree->root == NULL)
+        return true;
+    
+    // Начинаем с минимально и максимально возможными значениями
+    return isValidRec(tree->root, INT_MIN, INT_MAX);
 }
