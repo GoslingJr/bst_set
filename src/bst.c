@@ -37,7 +37,10 @@ static BSTNode* insertRec(BSTNode* node, int value)
 void bstInsert(BST* tree, int value)
 {
     if (tree != NULL) {
-        tree->root = insertRec(tree->root, value);
+        BSTNode* newRoot = insertRec(tree->root, value);
+        if (newRoot != NULL) {
+            tree->root = newRoot;
+        }
     }
 }
 
