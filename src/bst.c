@@ -59,16 +59,18 @@ static bool containsRec(BSTNode* node, int value)
 // Публичная функция рекурсивной проверки наличия
 bool bstContains(BST* tree, int value)
 {
-    if (tree == NULL)
+    if (tree == NULL) {
         return false;
+    }
     return containsRec(tree->root, value);
 }
 
 // Рекурсивная очистка
 static void freeRec(BSTNode* node)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return;
+    }
     freeRec(node->left);
     freeRec(node->right);
     free(node);
@@ -87,8 +89,9 @@ void bstFree(BST* tree)
 // Рекурсивный симметричный обход (in-order): левое поддерево -> узел -> правое поддерево
 static void inorderRec(BSTNode* node)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return;
+    }
 
     inorderRec(node->left);
     printf("%d ", node->key);
@@ -111,8 +114,9 @@ void bstInorder(BST* tree)
 // Рекурсивный прямой обход (pre-order): узел -> левое поддерево -> правое поддерево
 static void preorderRec(BSTNode* node)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return;
+    }
 
     printf("%d ", node->key);
     preorderRec(node->left);
@@ -135,8 +139,9 @@ void bstPreorder(BST* tree)
 // Рекурсивный обратный обход (post-order): левое поддерево -> правое поддерево -> узел
 static void postorderRec(BSTNode* node)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return;
+    }
 
     postorderRec(node->left);
     postorderRec(node->right);
@@ -159,8 +164,9 @@ void bstPostorder(BST* tree)
 // Рекурсивное вычисление высоты дерева
 static int heightRec(BSTNode* node)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return 0;
+    }
 
     int leftHeight = heightRec(node->left);
     int rightHeight = heightRec(node->right);
@@ -171,8 +177,9 @@ static int heightRec(BSTNode* node)
 // Вычисление количества узлов в поддереве
 static int sizeRec(BSTNode* node)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return 0;
+    }
 
     return 1 + sizeRec(node->left) + sizeRec(node->right);
 }
@@ -181,8 +188,9 @@ static int sizeRec(BSTNode* node)
 static int minRec(BSTNode* node)
 {
     // Предполагается, что node не NULL
-    while (node->left != NULL)
+    while (node->left != NULL) {
         node = node->left;
+    }
 
     return node->key;
 }
@@ -191,8 +199,9 @@ static int minRec(BSTNode* node)
 static int maxRec(BSTNode* node)
 {
     // Предполагается, что node не NULL
-    while (node->right != NULL)
+    while (node->right != NULL) {
         node = node->right;
+    }
 
     return node->key;
 }
@@ -200,8 +209,9 @@ static int maxRec(BSTNode* node)
 // Публичая функция, возвращающая высоту дерева (пустое дерево имеет высоту 0)
 int bstHeight(BST* tree)
 {
-    if (tree == NULL || tree->root == NULL)
+    if (tree == NULL || tree->root == NULL) {
         return 0;
+    }
 
     return heightRec(tree->root);
 }
@@ -209,8 +219,9 @@ int bstHeight(BST* tree)
 // Публичая функция, возвращающая количество узлов в дереве
 int bstSize(BST* tree)
 {
-    if (tree == NULL || tree->root == NULL)
+    if (tree == NULL || tree->root == NULL) {
         return 0;
+    }
 
     return sizeRec(tree->root);
 }

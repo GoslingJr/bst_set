@@ -133,7 +133,6 @@ void testNullHandling()
 
     // Тест с NULL деревом
     bstInsert(NULL, 10); // Не должна упасть
-    bstContains(NULL, 10); // Должна вернуть false
     bstFree(NULL); // Не должна упасть
 
     // Проверка возврата false для NULL дерева
@@ -210,7 +209,7 @@ void testHeightAndSize()
     assert(bstSize(tree) == 6);
 
     bstFree(tree);
-    printf("OK\n");
+    puts("OK");
 }
 
 void testMinAndMax()
@@ -221,8 +220,8 @@ void testMinAndMax()
 
     // Вставляем элементы в разном порядке
     int values[] = { 50, 30, 70, 20, 40, 80, 10, 90, 60 };
-    for (int i = 0; i < 9; i++) {
-        bstInsert(tree, values[i]);
+    for (int index = 0; index < 9; ++index) {
+        bstInsert(tree, values[index]);
     }
 
     assert(bstMin(tree) == 10);
@@ -236,5 +235,5 @@ void testMinAndMax()
     assert(bstMax(tree) == 100);
 
     bstFree(tree);
-    printf("OK\n");
+    puts("OK");
 }
