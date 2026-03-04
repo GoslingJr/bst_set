@@ -155,3 +155,85 @@ void bstPostorder(BST* tree)
     postorderRec(tree->root);
     puts("");
 }
+
+static int heightRec(BSTNode* node)
+{
+    if (node == NULL)
+        return 0;
+
+    int leftHeight = heightRec(node->left);
+    int rightHeight = heightRec(node->right);
+
+    return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+}
+
+// Вычисление количества узлов в поддереве
+static int sizeRec(BSTNode* node)
+{
+    if (node == NULL)
+        return 0;
+
+    return 1 + sizeRec(node->left) + sizeRec(node->right);
+}
+
+// Поиск минимального значения в поддереве
+static int minRec(BSTNode* node)
+{
+    // Предполагается, что node не NULL
+    while (node->left != NULL)
+        node = node->left;
+
+    return node->key;
+}
+
+// Поиск максимального значения в поддереве
+static int maxRec(BSTNode* node)
+{
+    // Предполагается, что node не NULL
+    while (node->right != NULL)
+        node = node->right;
+
+    return node->key;
+}
+
+// Публичая функция, возвращающая высоту дерева (пустое дерево имеет высоту 0)
+int bstHeight(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return heightRec(tree->root);
+}
+
+// Публичая функция, возвращающая количество узлов в дереве
+int bstSize(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return sizeRec(tree->root);
+}
+
+// Публичая функция, возвращающая минимальное значение в дереве
+// Поведение на пустом дереве: завершает программу с сообщением об ошибке
+int bstMin(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL) {
+        fprintf(stderr, "Error: calling bstMin on an empty tree\n");
+        exit(1);
+    }
+
+    return minRec(tree->root);
+}
+
+// Публичая функция, возвращающая максимальное значение в дереве
+// Поведение на пустом дереве: завершает программу с сообщением об ошибке
+int bstMax(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL) {
+        fprintf(stderr, "Ошибка: вызов bstMax на пустом дереве\n");
+        exit(1);
+    }
+
+    return maxRec(tree->root);
+}
