@@ -251,7 +251,7 @@ void testDelete()
 
     // Заполняем дерево
     for (int index = 1; index <= 10; ++index) {
-        bstInsert(tree, index*10);
+        bstInsert(tree, index * 10);
     }
 
     assert(bstSize(tree) == 10);
