@@ -25,3 +25,27 @@ bool bstContains(BST* tree, int value);
 
 // Освобождение памяти
 void bstFree(BST* tree);
+
+// Симметричный обход (in-order)
+void bstInorder(BST* tree);
+
+// Прямой обход (pre-order)
+void bstPreorder(BST* tree);
+
+// Обратный обход (post-order)
+void bstPostorder(BST* tree);
+
+// Высота дерева (количество уровней)
+// Пустое дерево имеет высоту 0
+int bstHeight(BST* tree);
+
+// Количество узлов в дереве
+int bstSize(BST* tree);
+
+// Минимальное значение в дереве
+// Вызов на пустом дереве приводит к аварийному завершению программы
+int bstMin(BST* tree);
+
+// Максимальное значение в дереве
+// Вызов на пустом дереве приводит к аварийному завершению программы
+int bstMax(BST* tree);
