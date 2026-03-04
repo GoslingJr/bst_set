@@ -21,8 +21,7 @@ static BSTNode* insertRec(BSTNode* node, int value)
     if (node == NULL) {
         BSTNode* newNode = malloc(sizeof(BSTNode));
         if (newNode == NULL) {
-            // Возвращение существующего поддерева без изменений
-            return node;
+            return NULL;
         }
         newNode->key = value;
         newNode->left = newNode->right = NULL;
@@ -247,7 +246,7 @@ int bstMin(BST* tree)
 int bstMax(BST* tree)
 {
     if (tree == NULL || tree->root == NULL) {
-        fprintf(stderr, "Error: calling bstMin on an empty tree\n");
+        fprintf(stderr, "Error: calling bstMax on an empty tree\n");
         exit(1);
     }
 
