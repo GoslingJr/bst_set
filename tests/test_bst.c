@@ -11,6 +11,7 @@ void testNullHandling();
 void testMultipleOperations();
 void testHeightAndSize();
 void testMinAndMax();
+void testIsValid();
 
 // Запуск всех тестов
 int main()
@@ -25,6 +26,7 @@ int main()
     testMultipleOperations();
     testHeightAndSize();
     testMinAndMax();
+    testIsValid();
 
     puts("\nAll test passed!");
     return 0;
@@ -260,8 +262,16 @@ void testIsValid()
     // Создаём некорректное дерево (нарушаем структуру)
     BST* invalidTree = createBST();
     invalidTree->root = malloc(sizeof(BSTNode));
+    if (invalidTree->root == NULL) {
+        puts("Test skipped [MEMORY ALLOCATION ERROR]");
+        return;
+    }
     invalidTree->root->key = 50;
     invalidTree->root->left = malloc(sizeof(BSTNode));
+    if (invalidTree->root->left == NULL) {
+        puts("Test skipped [MEMORY ALLOCATION ERROR]");
+        return;
+    }
     invalidTree->root->left->key = 60; // Ошибка: 60 > 50, но находится слева
     invalidTree->root->left->left = NULL;
     invalidTree->root->left->right = NULL;
