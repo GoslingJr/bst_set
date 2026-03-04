@@ -180,6 +180,7 @@ void testMultipleOperations()
     puts("OK");
 }
 
+// Проверка высоты и размера дерева
 void testHeightAndSize()
 {
     printf("Testing: The height and size of a tree... ");
@@ -212,6 +213,7 @@ void testHeightAndSize()
     puts("OK");
 }
 
+// Проверка максимального и минимального элементов дерева
 void testMinAndMax()
 {
     printf("Testing: Minimum and maximum... ");
