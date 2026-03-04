@@ -1,6 +1,7 @@
 #include "../include/bst.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // Прототипы тестов
 void testCreateAndFree();
@@ -263,12 +264,15 @@ void testIsValid()
     BST* invalidTree = createBST();
     invalidTree->root = malloc(sizeof(BSTNode));
     if (invalidTree->root == NULL) {
+        free(invalidTree);
         puts("Test skipped [MEMORY ALLOCATION ERROR]");
         return;
     }
     invalidTree->root->key = 50;
     invalidTree->root->left = malloc(sizeof(BSTNode));
     if (invalidTree->root->left == NULL) {
+        free(invalidTree->root);
+        free(invalidTree);
         puts("Test skipped [MEMORY ALLOCATION ERROR]");
         return;
     }
