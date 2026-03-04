@@ -26,14 +26,14 @@ int main()
     testHeightAndSize();
     testMinAndMax();
 
-    puts("\nAll test passed!\n");
+    puts("\nAll test passed!");
     return 0;
 }
 
 // Создание и освобождение дерева
 void testCreateAndFree()
 {
-    printf("Test 1: Creating and releasing a tree... ");
+    printf("Testing: Creating and releasing a tree... ");
 
     BST* tree = createBST();
     assert(tree != NULL);
@@ -47,7 +47,7 @@ void testCreateAndFree()
 // Вставка и проверка наличия элементов
 void testInsertAndContains()
 {
-    printf("Test 2: Insertion and verification of availability... ");
+    printf("Testing: Insertion and verification of availability... ");
 
     BST* tree = createBST();
 
@@ -81,7 +81,7 @@ void testInsertAndContains()
 // Вставка дубликатов
 void testDuplicateInsert()
 {
-    printf("Test 3: Inserting duplicates... ");
+    printf("Testing: Inserting duplicates... ");
 
     BST* tree = createBST();
 
@@ -108,7 +108,7 @@ void testDuplicateInsert()
 // Граничные значения
 void testBoundaryValues()
 {
-    printf("Test 4: Boundary values... ");
+    printf("Testing: Boundary values... ");
 
     BST* tree = createBST();
 
@@ -129,7 +129,7 @@ void testBoundaryValues()
 // Обработка NULL указателей
 void testNullHandling()
 {
-    printf("Test 5: Handling NULL pointers... ");
+    printf("Testing: Handling NULL pointers... ");
 
     // Тест с NULL деревом
     bstInsert(NULL, 10); // Не должна упасть
@@ -152,7 +152,7 @@ void testNullHandling()
 // Комплексное тестирование
 void testMultipleOperations()
 {
-    printf("Test 6: Comprehensive testing... ");
+    printf("Testing: Comprehensive testing... ");
 
     BST* tree = createBST();
 
@@ -183,7 +183,7 @@ void testMultipleOperations()
 
 void testHeightAndSize()
 {
-    printf("Test 7: The height and size of a tree... ");
+    printf("Testing: The height and size of a tree... ");
 
     BST* tree = createBST();
 
@@ -215,7 +215,7 @@ void testHeightAndSize()
 
 void testMinAndMax()
 {
-    printf("Test 8: Minimum and maximum... ");
+    printf("Testing: Minimum and maximum... ");
 
     BST* tree = createBST();
 
@@ -237,4 +237,48 @@ void testMinAndMax()
 
     bstFree(tree);
     printf("OK\n");
+}
+
+// Один тест для всего
+void testDelete()
+{
+    printf("Testing: Delete operations... ");
+    
+    BST* tree = createBST();
+    
+    // Заполняем дерево
+    for (int i = 10; i <= 100; i += 10)
+        bstInsert(tree, i);
+    
+    assert(bstSize(tree) == 10);
+    
+    // Удаляем разные элементы
+    bstDelete(tree, 10);
+    bstDelete(tree, 80);
+    assert(bstSize(tree) == 8);
+    
+    bstDelete(tree, 30); // узел с двумя потомками (30: 20, 40)
+    bstDelete(tree, 70); // узел с одним потомком (70 -> 80 был удалён, остался 60)
+    assert(bstSize(tree) == 6);
+    
+    // Проверяем, что нужные элементы удалились
+    assert(bstContains(tree, 10) == false);
+    assert(bstContains(tree, 30) == false);
+    assert(bstContains(tree, 70) == false);
+    assert(bstContains(tree, 80) == false);
+    
+    // А эти остались
+    assert(bstContains(tree, 20) == true);
+    assert(bstContains(tree, 40) == true);
+    assert(bstContains(tree, 50) == true);
+    assert(bstContains(tree, 60) == true);
+    assert(bstContains(tree, 90) == true);
+    assert(bstContains(tree, 100) == true);
+    
+    // Удаление несуществующего
+    bstDelete(tree, 666);
+    assert(bstSize(tree) == 6);  // размер не изменился
+    
+    bstFree(tree);
+    puts("OK");
 }

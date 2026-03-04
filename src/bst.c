@@ -149,7 +149,7 @@ static BSTNode* deleteRec(BSTNode* node, int value)
     return node;
 }
 
-// Обертка функции удаления
+// Публичная функция удаления
 void bstDelete(BST* tree, int value)
 {
     if (tree == NULL)
