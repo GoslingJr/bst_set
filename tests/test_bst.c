@@ -1,6 +1,7 @@
 #include "../include/bst.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // Прототипы тестов
 void testCreateAndFree();
@@ -11,6 +12,7 @@ void testNullHandling();
 void testMultipleOperations();
 void testHeightAndSize();
 void testMinAndMax();
+void testIsValid();
 
 // Запуск всех тестов
 int main()
@@ -25,6 +27,7 @@ int main()
     testMultipleOperations();
     testHeightAndSize();
     testMinAndMax();
+    testIsValid();
 
     puts("\nAll test passed!");
     return 0;
@@ -237,5 +240,60 @@ void testMinAndMax()
     assert(bstMax(tree) == 100);
 
     bstFree(tree);
+    puts("OK");
+}
+
+// Проверка корректности BST
+void testIsValid()
+{
+    printf("Testing: Tree validation... ");
+
+    // Создаём корректное дерево
+    BST* validTree = createBST();
+    bstInsert(validTree, 50);
+    bstInsert(validTree, 30);
+    bstInsert(validTree, 70);
+    bstInsert(validTree, 20);
+    bstInsert(validTree, 40);
+    bstInsert(validTree, 60);
+    bstInsert(validTree, 80);
+
+    assert(bstIsValid(validTree) == true);
+
+    // Создаём некорректное дерево (нарушаем структуру)
+    BST* invalidTree = createBST();
+    invalidTree->root = malloc(sizeof(BSTNode));
+    if (invalidTree->root == NULL) {
+        free(invalidTree);
+        puts("Test skipped [MEMORY ALLOCATION ERROR]");
+        return;
+    }
+    invalidTree->root->key = 50;
+    invalidTree->root->left = malloc(sizeof(BSTNode));
+    if (invalidTree->root->left == NULL) {
+        free(invalidTree->root);
+        free(invalidTree);
+        puts("Test skipped [MEMORY ALLOCATION ERROR]");
+        return;
+    }
+    invalidTree->root->left->key = 60; // Ошибка: 60 > 50, но находится слева
+    invalidTree->root->left->left = NULL;
+    invalidTree->root->left->right = NULL;
+    invalidTree->root->right = NULL;
+
+    assert(bstIsValid(invalidTree) == false);
+
+    // Освобождаем память некорректного дерева вручную
+    free(invalidTree->root->left);
+    free(invalidTree->root);
+    free(invalidTree);
+
+    // Пустое дерево
+    BST* emptyTree = createBST();
+    assert(bstIsValid(emptyTree) == true);
+
+    bstFree(validTree);
+    bstFree(emptyTree);
+
     puts("OK");
 }
