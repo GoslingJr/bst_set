@@ -244,7 +244,7 @@ int bstMin(BST* tree)
 int bstMax(BST* tree)
 {
     if (tree == NULL || tree->root == NULL) {
-        fprintf(stderr, "Error: calling bstMan on an empty tree\n");
+        fprintf(stderr, "Error: calling bstMax on an empty tree\n");
         exit(1);
     }
 
