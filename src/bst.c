@@ -33,7 +33,7 @@ static BSTNode* insertRec(BSTNode* node, int value)
     return node;
 }
 
-// Обертка рекурсивной функции вставки
+// Публичная функция рекурсивной вставки
 void bstInsert(BST* tree, int value)
 {
     if (tree != NULL)
@@ -56,7 +56,7 @@ static bool containsRec(BSTNode* node, int value)
     }
 }
 
-// Обертка функции рекурсивной проверки наличия
+// Публичная функция рекурсивной проверки наличия
 bool bstContains(BST* tree, int value)
 {
     if (tree == NULL)
@@ -74,7 +74,7 @@ static void freeRec(BSTNode* node)
     free(node);
 }
 
-// Обертка функции очистки дерева
+// Публичная функция очистки дерева
 void bstFree(BST* tree)
 {
     if (tree != NULL) {
@@ -82,4 +82,76 @@ void bstFree(BST* tree)
         tree->root = NULL;
         free(tree);
     }
+}
+
+// Рекурсивный симметричный обход (in-order): левое поддерево -> узел -> правое поддерево
+static void inorderRec(BSTNode* node)
+{
+    if (node == NULL)
+        return;
+
+    inorderRec(node->left);
+    printf("%d ", node->key);
+    inorderRec(node->right);
+}
+
+// Публичная функция симметричного обхода
+void bstInorder(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL) {
+        puts("Tree is empty");
+        return;
+    }
+
+    printf("Symmetric traversal (in-order): ");
+    inorderRec(tree->root);
+    puts("");
+}
+
+// Рекурсивный прямой обход (pre-order): узел -> левое поддерево -> правое поддерево
+static void preorderRec(BSTNode* node)
+{
+    if (node == NULL)
+        return;
+
+    printf("%d ", node->key);
+    preorderRec(node->left);
+    preorderRec(node->right);
+}
+
+// Публичная функция прямого обхода
+void bstPreorder(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL) {
+        puts("Tree is empty");
+        return;
+    }
+
+    printf("Direct traversal (pre-order): ");
+    preorderRec(tree->root);
+    puts("");
+}
+
+// Рекурсивный обратный обход (post-order): левое поддерево -> правое поддерево -> узел
+static void postorderRec(BSTNode* node)
+{
+    if (node == NULL)
+        return;
+
+    postorderRec(node->left);
+    postorderRec(node->right);
+    printf("%d ", node->key);
+}
+
+// Публичная функция обратного обхода
+void bstPostorder(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL) {
+        puts("Tree is empty");
+        return;
+    }
+
+    printf("Reverse traversal (post-order): ");
+    postorderRec(tree->root);
+    puts("");
 }
