@@ -26,18 +26,20 @@ static BSTNode* insertRec(BSTNode* node, int value)
         newNode->left = newNode->right = NULL;
         return newNode;
     }
-    if (value < node->key)
+    if (value < node->key) {
         node->left = insertRec(node->left, value);
-    else if (value > node->key)
+    } else if (value > node->key) {
         node->right = insertRec(node->right, value);
+    }
     return node;
 }
 
 // Публичная функция рекурсивной вставки
 void bstInsert(BST* tree, int value)
 {
-    if (tree != NULL)
+    if (tree != NULL) {
         tree->root = insertRec(tree->root, value);
+    }
 }
 
 // Рекурсивная проверка наличия
@@ -89,11 +91,13 @@ void bstFree(BST* tree)
 // Поиск минимального элемента в поддереве
 static BSTNode* findMin(BSTNode* node)
 {
-    if (node == NULL)
+    if (node == NULL) {
         return NULL;
+    }
 
-    while (node->left != NULL)
+    while (node->left != NULL) {
         node = node->left;
+    }
 
     return node;
 }
@@ -102,8 +106,9 @@ static BSTNode* findMin(BSTNode* node)
 static BSTNode* deleteRec(BSTNode* node, int value)
 {
     // Базовый случай: значение не найдено
-    if (node == NULL)
+    if (node == NULL) {
         return NULL;
+    }
 
     // Ищем удаляемый узел
     if (value < node->key) {
@@ -154,8 +159,9 @@ static BSTNode* deleteRec(BSTNode* node, int value)
 // Публичная функция удаления
 void bstDelete(BST* tree, int value)
 {
-    if (tree == NULL)
+    if (tree == NULL) {
         return;
+    }
 
     tree->root = deleteRec(tree->root, value);
 }
