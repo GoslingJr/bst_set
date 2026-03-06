@@ -260,15 +260,16 @@ int bstMax(BST* tree)
     return maxRec(tree->root);
 }
 
-static void kthMinHelper(Node* node, int k, int* count, int* result, bool* found)
+static void kthMinHelper(BSTNode* node, int k, int* count, int* result, bool* found)
 {
-    if (node == NULL || *found) return;
+    if (node == NULL || *found)
+        return;
 
     kthMinHelper(node->left, k, count, result, found);
 
     (*count)++;
     if (*count == k) {
-        *result = node->value;
+        *result = node->key;
         *found = true;
         return;
     }
@@ -278,7 +279,12 @@ static void kthMinHelper(Node* node, int k, int* count, int* result, bool* found
 
 int bstKthMin(BST* tree, int k)
 {
-    if (tree == NULL || tree->root == NULL || k <= 0) return 0;
+    if (tree == NULL || tree->root == NULL || k <= 0)
+        return 0;
+
+    int size = bstSize(tree);
+    if (k > size)
+        return 0;
 
     int count = 0;
     int result = 0;
