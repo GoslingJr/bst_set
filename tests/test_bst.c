@@ -242,31 +242,32 @@ void testMinAndMax()
     puts("OK");
 }
 
-void testBSTKthMin() {
+void testBSTKthMin()
+{
     printf("Testing: Minimum k-th element... ");
 
     BST* tree = createBST();
-    
+
     // Вставляем элементы: 5, 3, 7, 2, 4
     bstInsert(tree, 5);
     bstInsert(tree, 3);
     bstInsert(tree, 7);
     bstInsert(tree, 2);
     bstInsert(tree, 4);
-    
+
     // Проверяем k-тые минимумы
     assert(bstKthMin(tree, 1) == 2); // самый маленький
     assert(bstKthMin(tree, 2) == 3);
     assert(bstKthMin(tree, 3) == 4);
     assert(bstKthMin(tree, 4) == 5);
     assert(bstKthMin(tree, 5) == 7); // самый большой
-    
+
     // Проверяем граничные случаи
     assert(bstKthMin(tree, 0) == 0); // k <= 0
     assert(bstKthMin(tree, 6) == 0); // k > размера
     assert(bstKthMin(NULL, 1) == 0); // дерево NULL
-    
+
     puts("OK");
-    
+
     bstFree(tree);
 }
