@@ -259,3 +259,41 @@ int bstMax(BST* tree)
 
     return maxRec(tree->root);
 }
+
+// Рекурсивная функция для обхода дерева и вставки элементов
+static void mergeRec(BSTNode* node, BST* targetTree)
+{
+    if (node == NULL) {
+        return;
+    }
+    // Рекурсивно обходим левое поддерево
+    mergeRec(node->left, targetTree);
+
+    // Вставляем текущий элемент в целевое дерево
+    bstInsert(targetTree, node->key);
+
+    // Рекурсивно обходим правое поддерево
+    mergeRec(node->right, targetTree);
+}
+
+// Публичная функция слияния двух деревьев
+BST* bstMerge(BST* tree1, BST* tree2)
+{
+    // Создаём новое пустое дерево
+    BST* newTree = createBST();
+    if (newTree == NULL) {
+        return NULL;
+    }
+
+    // Вставляем элементы из первого дерева (если оно не NULL)
+    if (tree1 != NULL && tree1->root != NULL) {
+        mergeRec(tree1->root, newTree);
+    }
+
+    // Вставляем элементы из второго дерева (если оно не NULL)
+    if (tree2 != NULL && tree2->root != NULL) {
+        mergeRec(tree2->root, newTree);
+    }
+
+    return newTree;
+}

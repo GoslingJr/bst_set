@@ -11,6 +11,7 @@ void testNullHandling();
 void testMultipleOperations();
 void testHeightAndSize();
 void testMinAndMax();
+void testMerge();
 
 // Запуск всех тестов
 int main()
@@ -25,6 +26,7 @@ int main()
     testMultipleOperations();
     testHeightAndSize();
     testMinAndMax();
+    testMerge();
 
     puts("\nAll test passed!");
     return 0;
@@ -237,5 +239,67 @@ void testMinAndMax()
     assert(bstMax(tree) == 100);
 
     bstFree(tree);
+    puts("OK");
+}
+
+// Проверка слияния деревьев
+void testMerge()
+{
+    printf("Testing: Merging trees... ");
+
+    // Создаём деревья
+    BST* tree1 = createBST();
+    BST* tree2 = createBST();
+
+    // Заполняем первое дерево
+    bstInsert(tree1, 50);
+    bstInsert(tree1, 30);
+    bstInsert(tree1, 70);
+
+    // Заполняем второе дерево (с дубликатами)
+    bstInsert(tree2, 40);
+    bstInsert(tree2, 60);
+    bstInsert(tree2, 80);
+    bstInsert(tree2, 50); // дубликат
+
+    // Сливаем
+    BST* merged = bstMerge(tree1, tree2);
+
+    // Проверка с уникальными элементами
+    assert(bstSize(merged) == 6);
+    assert(bstContains(merged, 30) == true);
+    assert(bstContains(merged, 40) == true);
+    assert(bstContains(merged, 50) == true);
+    assert(bstContains(merged, 60) == true);
+    assert(bstContains(merged, 70) == true);
+    assert(bstContains(merged, 80) == true);
+
+    // Исходные деревья не изменились
+    assert(bstSize(tree1) == 3);
+    assert(bstSize(tree2) == 4);
+
+    // Слияние с пустым деревом
+    BST* empty = createBST();
+    BST* mergedEmpty = bstMerge(tree1, empty);
+    assert(bstSize(mergedEmpty) == 3);
+
+    // Слияние с NULL
+    BST* mergedNull = bstMerge(tree1, NULL);
+    assert(bstSize(mergedNull) == 3);
+
+    // Слияние двух NULL
+    BST* mergedNulls = bstMerge(NULL, NULL);
+    assert(mergedNulls != NULL);
+    assert(bstSize(mergedNulls) == 0);
+
+    // Очистка
+    bstFree(tree1);
+    bstFree(tree2);
+    bstFree(merged);
+    bstFree(empty);
+    bstFree(mergedEmpty);
+    bstFree(mergedNull);
+    bstFree(mergedNulls);
+
     puts("OK");
 }
