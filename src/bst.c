@@ -290,3 +290,43 @@ Iterator* iteratorInit(BST* tree)
 
     return maxRec(tree->root);
 }
+
+bool iteratorHasNext(Iterator* it)
+{
+    if (it == NULL) {
+        return false;
+    }
+
+    return it->top >= 0;
+}
+
+int iteratorNext(Iterator* it)
+{
+    if (it == NULL || it->top < 0) {
+        fprintf(stderr, "Iterator exhausted\n");
+        exit(1);
+    }
+
+    BSTNode* node = it->stack[it->top--];
+    int value = node->key;
+
+    BSTNode* current = node->right;
+
+    while (current != NULL) {
+        it->stack[++it->top] = current;
+        current = current->left;
+    }
+
+    return value;
+}
+
+
+void iteratorFree(Iterator* it)
+{
+    if (it == NULL) {
+        return;
+    }
+
+    free(it->stack);
+    free(it);
+}
