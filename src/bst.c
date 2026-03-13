@@ -1,4 +1,5 @@
 #include "../include/bst.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -216,7 +217,7 @@ static int maxRec(BSTNode* node)
     return node->key;
 }
 
-// Публичая функция, возвращающая высоту дерева (пустое дерево имеет высоту 0)
+// Публичная функция, возвращающая высоту дерева (пустое дерево имеет высоту 0)
 int bstHeight(BST* tree)
 {
     if (tree == NULL || tree->root == NULL) {
@@ -226,7 +227,7 @@ int bstHeight(BST* tree)
     return heightRec(tree->root);
 }
 
-// Публичая функция, возвращающая количество узлов в дереве
+// Публичная функция, возвращающая количество узлов в дереве
 int bstSize(BST* tree)
 {
     if (tree == NULL || tree->root == NULL) {
@@ -236,7 +237,7 @@ int bstSize(BST* tree)
     return sizeRec(tree->root);
 }
 
-// Публичая функция, возвращающая минимальное значение в дереве
+// Публичная функция, возвращающая минимальное значение в дереве
 // Поведение на пустом дереве: завершает программу с сообщением об ошибке
 int bstMin(BST* tree)
 {
@@ -248,7 +249,7 @@ int bstMin(BST* tree)
     return minRec(tree->root);
 }
 
-// Публичая функция, возвращающая максимальное значение в дереве
+// Публичная функция, возвращающая максимальное значение в дереве
 // Поведение на пустом дереве: завершает программу с сообщением об ошибке
 int bstMax(BST* tree)
 {
@@ -287,8 +288,7 @@ Iterator* iteratorInit(BST* tree)
     }
 
     return it;
-}    
-
+}
 
 bool iteratorHasNext(Iterator* it)
 {
@@ -318,7 +318,6 @@ int iteratorNext(Iterator* it)
 
     return value;
 }
-
 
 void iteratorFree(Iterator* it)
 {
