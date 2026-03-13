@@ -1,4 +1,5 @@
 #include "../include/bst.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -216,7 +217,7 @@ static int maxRec(BSTNode* node)
     return node->key;
 }
 
-// Публичая функция, возвращающая высоту дерева (пустое дерево имеет высоту 0)
+// Публичная функция, возвращающая высоту дерева (пустое дерево имеет высоту 0)
 int bstHeight(BST* tree)
 {
     if (tree == NULL || tree->root == NULL) {
@@ -226,7 +227,7 @@ int bstHeight(BST* tree)
     return heightRec(tree->root);
 }
 
-// Публичая функция, возвращающая количество узлов в дереве
+// Публичная функция, возвращающая количество узлов в дереве
 int bstSize(BST* tree)
 {
     if (tree == NULL || tree->root == NULL) {
@@ -236,7 +237,7 @@ int bstSize(BST* tree)
     return sizeRec(tree->root);
 }
 
-// Публичая функция, возвращающая минимальное значение в дереве
+// Публичная функция, возвращающая минимальное значение в дереве
 // Поведение на пустом дереве: завершает программу с сообщением об ошибке
 int bstMin(BST* tree)
 {
@@ -248,7 +249,7 @@ int bstMin(BST* tree)
     return minRec(tree->root);
 }
 
-// Публичая функция, возвращающая максимальное значение в дереве
+// Публичная функция, возвращающая максимальное значение в дереве
 // Поведение на пустом дереве: завершает программу с сообщением об ошибке
 int bstMax(BST* tree)
 {
@@ -256,6 +257,74 @@ int bstMax(BST* tree)
         fprintf(stderr, "Error: calling bstMax on an empty tree\n");
         exit(1);
     }
-
     return maxRec(tree->root);
+}
+
+Iterator* iteratorInit(BST* tree)
+{
+    if (tree == NULL) {
+        return NULL;
+    }
+
+    Iterator* it = malloc(sizeof(Iterator));
+    if (it == NULL) {
+        return NULL;
+    }
+
+    it->capacity = 128;
+    it->top = -1;
+    it->stack = malloc(sizeof(BSTNode*) * it->capacity);
+
+    if (it->stack == NULL) {
+        free(it);
+        return NULL;
+    }
+
+    BSTNode* current = tree->root;
+
+    while (current != NULL) {
+        it->stack[++it->top] = current;
+        current = current->left;
+    }
+
+    return it;
+}
+
+bool iteratorHasNext(Iterator* it)
+{
+    if (it == NULL) {
+        return false;
+    }
+
+    return it->top >= 0;
+}
+
+int iteratorNext(Iterator* it)
+{
+    if (it == NULL || it->top < 0) {
+        fprintf(stderr, "Iterator exhausted\n");
+        exit(1);
+    }
+
+    BSTNode* node = it->stack[it->top--];
+    int value = node->key;
+
+    BSTNode* current = node->right;
+
+    while (current != NULL) {
+        it->stack[++it->top] = current;
+        current = current->left;
+    }
+
+    return value;
+}
+
+void iteratorFree(Iterator* it)
+{
+    if (it == NULL) {
+        return;
+    }
+
+    free(it->stack);
+    free(it);
 }

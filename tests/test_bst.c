@@ -11,6 +11,7 @@ void testNullHandling();
 void testMultipleOperations();
 void testHeightAndSize();
 void testMinAndMax();
+void testIterator();
 
 // Запуск всех тестов
 int main()
@@ -25,6 +26,7 @@ int main()
     testMultipleOperations();
     testHeightAndSize();
     testMinAndMax();
+    testIterator();
 
     puts("\nAll test passed!");
     return 0;
@@ -237,5 +239,58 @@ void testMinAndMax()
     assert(bstMax(tree) == 100);
 
     bstFree(tree);
+    puts("OK");
+}
+
+// Тестирование итератора
+void testIterator()
+{
+    printf("Testing: Iterator... ");
+
+    BST* tree = createBST();
+
+    bstInsert(tree, 5);
+    bstInsert(tree, 3);
+    bstInsert(tree, 7);
+    bstInsert(tree, 2);
+    bstInsert(tree, 4);
+    bstInsert(tree, 6);
+    bstInsert(tree, 8);
+
+    int expected[] = { 2, 3, 4, 5, 6, 7, 8 };
+    int numExpected = sizeof(expected) / sizeof(expected[0]);
+
+    Iterator* it = iteratorInit(tree);
+    assert(it != NULL);
+
+    int index = 0;
+    while (iteratorHasNext(it)) {
+        assert(index < numExpected);
+        assert(iteratorNext(it) == expected[index]);
+        index++;
+    }
+
+    assert(index == numExpected);
+
+    iteratorFree(it);
+    bstFree(tree);
+
+    // Тест на пустом дереве
+    BST* emptyTree = createBST();
+    Iterator* emptyIt = iteratorInit(emptyTree);
+    assert(emptyIt != NULL);
+    assert(iteratorHasNext(emptyIt) == false);
+    iteratorFree(emptyIt);
+    bstFree(emptyTree);
+
+    // Тест iteratorInit с NULL
+    assert(iteratorInit(NULL) == NULL);
+
+    // Тест iteratorHasNext с NULL
+    assert(iteratorHasNext(NULL) == false);
+
+    // Тест iteratorFree с NULL (не должна упасть)
+    iteratorFree(NULL);
+
     puts("OK");
 }

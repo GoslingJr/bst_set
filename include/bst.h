@@ -50,3 +50,15 @@ int bstMin(BST* tree);
 // Максимальное значение в дереве
 // Вызов на пустом дереве приводит к аварийному завершению программы
 int bstMax(BST* tree);
+
+// Итератор для inorder обхода без рекурсии
+typedef struct Iterator {
+    BSTNode** stack;
+    int top;
+    int capacity;
+} Iterator;
+
+Iterator* iteratorInit(BST* tree);
+bool iteratorHasNext(Iterator* it);
+int iteratorNext(Iterator* it);
+void iteratorFree(Iterator* it);
