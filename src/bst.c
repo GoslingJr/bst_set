@@ -257,5 +257,36 @@ int bstMax(BST* tree)
         exit(1);
     }
 
+
+Iterator* iteratorInit(BST* tree)
+{
+    if (tree == NULL) {
+        return NULL;
+    }
+
+    Iterator* it = malloc(sizeof(Iterator));
+    if (it == NULL) {
+        return NULL;
+    }
+
+    it->capacity = 128;
+    it->top = -1;
+    it->stack = malloc(sizeof(BSTNode*) * it->capacity);
+
+    if (it->stack == NULL) {
+        free(it);
+        return NULL;
+    }
+
+    BSTNode* current = tree->root;
+
+    while (current != NULL) {
+        it->stack[++it->top] = current;
+        current = current->left;
+    }
+
+    return it;
+}    
+
     return maxRec(tree->root);
 }
