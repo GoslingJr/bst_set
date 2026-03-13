@@ -256,7 +256,8 @@ int bstMax(BST* tree)
         fprintf(stderr, "Error: calling bstMax on an empty tree\n");
         exit(1);
     }
-
+    return maxRec(tree->root);
+}
 
 Iterator* iteratorInit(BST* tree)
 {
@@ -288,8 +289,6 @@ Iterator* iteratorInit(BST* tree)
     return it;
 }    
 
-    return maxRec(tree->root);
-}
 
 bool iteratorHasNext(Iterator* it)
 {
