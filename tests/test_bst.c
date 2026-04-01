@@ -11,6 +11,7 @@ void testNullHandling();
 void testMultipleOperations();
 void testHeightAndSize();
 void testMinAndMax();
+void testDelete();
 
 // Запуск всех тестов
 int main()
@@ -25,6 +26,7 @@ int main()
     testMultipleOperations();
     testHeightAndSize();
     testMinAndMax();
+    testDelete();
 
     puts("\nAll test passed!");
     return 0;
@@ -235,6 +237,51 @@ void testMinAndMax()
 
     assert(bstMin(tree) == 5);
     assert(bstMax(tree) == 100);
+
+    bstFree(tree);
+    puts("OK");
+}
+
+// Проверка удаления узла дерева
+void testDelete()
+{
+    printf("Testing: Delete operations... ");
+
+    BST* tree = createBST();
+
+    // Заполняем дерево
+    for (int index = 1; index <= 10; ++index) {
+        bstInsert(tree, index * 10);
+    }
+
+    assert(bstSize(tree) == 10);
+
+    // Удаляем разные элементы
+    bstDelete(tree, 10);
+    bstDelete(tree, 80);
+    assert(bstSize(tree) == 8);
+
+    bstDelete(tree, 30); // узел с двумя потомками (30: 20, 40)
+    bstDelete(tree, 70); // узел с одним потомком (70 -> 80 был удалён, остался 60)
+    assert(bstSize(tree) == 6);
+
+    // Проверяем, что нужные элементы удалились
+    assert(bstContains(tree, 10) == false);
+    assert(bstContains(tree, 30) == false);
+    assert(bstContains(tree, 70) == false);
+    assert(bstContains(tree, 80) == false);
+
+    // А эти остались
+    assert(bstContains(tree, 20) == true);
+    assert(bstContains(tree, 40) == true);
+    assert(bstContains(tree, 50) == true);
+    assert(bstContains(tree, 60) == true);
+    assert(bstContains(tree, 90) == true);
+    assert(bstContains(tree, 100) == true);
+
+    // Удаление несуществующего
+    bstDelete(tree, 666);
+    assert(bstSize(tree) == 6); // размер не изменился
 
     bstFree(tree);
     puts("OK");

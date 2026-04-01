@@ -27,6 +27,9 @@ bool bstContains(BST* tree, int value);
 // Освобождение памяти
 void bstFree(BST* tree);
 
+// Удаление узла с заданным значением
+void bstDelete(BST* tree, int value);
+
 // Симметричный обход (in-order)
 void bstInorder(BST* tree);
 
